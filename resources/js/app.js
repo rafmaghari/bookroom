@@ -1,6 +1,6 @@
 import router from "./router";
 import store from "./store";
-
+require('./bootstrap');
 
 window.Vue = require('vue').default;
 

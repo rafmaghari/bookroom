@@ -25,6 +25,7 @@ export default {
     },
     actions:{
         login({commit}){
+            axios.defaults.withCredentials =true
             return axios.get('/api/user').then(({data})=>{
                 commit('SET_USER',data)
                 commit('SET_AUTHENTICATED',true)

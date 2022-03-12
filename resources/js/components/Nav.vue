@@ -7,16 +7,35 @@
             </div>
         </div>
 
-        <div class="sm:mb-0 self-center text-sm">
-            <a href="#" class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">My Bookings</a>
-            <a href="#" class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">Book A Room</a>
+        <div class="sm:mb-0 self-center text-sm" v-if="authenticated">
+            <router-link :to="'my-bookings'" class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">My Bookings</router-link>
+            <router-link :to="'/book-room'" class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">Book A Room</router-link>
+            <button @click="logout" class="text-md underline text-gray-100 hover:text-gray-300 ml-2 px-1">Logout</button>
         </div>
     </nav>
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
-    name: "NavBar"
+    name: "NavBar",
+    data() {
+       return {
+           user: this.$store.getters["auth/user"],
+           authenticated: this.$store.getters["auth/authenticated"]
+       }
+    },
+    methods: {
+        ...mapActions({
+            signOut:"auth/logout"
+        }),
+        async logout(){
+            await axios.post('/logout').then(({data})=>{
+                this.signOut()
+                this.$router.push({name:"login"})
+            })
+        },
+    }
 }
 </script>
 

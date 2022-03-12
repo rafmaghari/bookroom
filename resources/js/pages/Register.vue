@@ -60,7 +60,7 @@
                             </div>
                             <div class="flex items-center justify-between">
                                 <button class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700"
-                                        type="submit"
+                                        type="button"
                                         @click="register"
                                 >Register</button>
                                 <div class="flex space-x-2">
@@ -97,7 +97,7 @@ export default {
     },
     methods: {
         register () {
-            axios.post('/api/register',this.form).then(response=>{
+            axios.post('/register',this.form).then(response=>{
                 console.log(response.data.data)
             }).catch(({response:{data}})=>{
                 alert(data.message)

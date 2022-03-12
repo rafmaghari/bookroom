@@ -16,12 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/me', function(Request $request) {
-        return auth()->user();
-    });
+//Route::group(['middleware' => ['auth:sanctum']], function () {
+//    Route::get('/me', function(Request $request) {
+//        return auth()->user();
+//    });
+//
+//    Route::resource('/rooms', RoomController::class);
+//    Route::get('/my-bookings', [RoomBookingController::class, 'myBookings']);
+//    Route::resource('/room-bookings', RoomBookingController::class);
+//});
 
-    Route::resource('/rooms', RoomController::class);
-    Route::get('/my-bookings', [RoomBookingController::class, 'myBookings']);
-    Route::resource('/room-bookings', RoomBookingController::class);
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
 });

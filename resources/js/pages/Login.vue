@@ -39,7 +39,11 @@
                                />
                            </div>
                            <div class="flex items-center justify-between">
-                               <button class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700" type="submit">Sign In</button>
+                               <button
+                                   @click="login"
+                                   class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700"
+                                   type="button"
+                               >Sign In</button>
                                <div class="flex space-x-2">
                                    <p class="text-sm">Don't have an account?</p>
                                    <router-link
@@ -59,15 +63,34 @@
 </template>
 <script>
 import BaseLayout from "../layout/BaseLayout";
+import { mapActions } from 'vuex'
 export default {
     name: "Login",
     components: {BaseLayout},
     data() {
         return {
             form: {
-                email: null,
-                password: null
+                email: "raf@gmail.com",
+                password: "Pa$$w0rd!"
             }
+        }
+    },
+    methods: {
+        ...mapActions({
+            signIn:'auth/login'
+        }),
+         login () {
+             axios.get('/sanctum/csrf-cookie')
+            .then(response => {
+               axios.post('/login', this.form)
+               .then(response => {
+                   console.log(response.data)
+                   this.signIn()
+               })
+                .catch(err => console.log(err))
+            })
+
+
         }
     }
 }
