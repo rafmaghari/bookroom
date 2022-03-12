@@ -8,8 +8,8 @@ const Login = () => import('../pages/Login.vue' /* webpackChunkName: "resource/j
 const Register = () => import('../pages/Register.vue' /* webpackChunkName: "resource/js/pages/register" */)
 
 const Dashboard = () => import('../pages/Dashboard.vue' /* webpackChunkName: "resource/js/pages/dashboard" */)
-const MyBookings = () => import('../pages/MyBooking' /* webpackChunkName: "resource/js/pages/myBooking" */)
-const BookRoom = () => import('../pages/BookRoom' /* webpackChunkName: "resource/js/pages/bookRoom" */)
+const MyBookings = () => import('../pages/MyBooking.vue' /* webpackChunkName: "resource/js/pages/myBooking" */)
+const BookRoom = () => import('../pages/BookRoom.vue' /* webpackChunkName: "resource/js/pages/bookRoom" */)
 
 const Routes = [
     {
