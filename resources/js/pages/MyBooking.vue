@@ -14,40 +14,26 @@
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4">ROOM</th>
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4">START</th>
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4">END</th>
+                                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4">REASON</th>
                                         <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4">OPTION</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="bg-white border-b">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            Mark
-                                        </td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            Otto
-                                        </td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            @mdo
-                                        </td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            <button class="py-2 rounded px-4 bg-gray-500 text-gray-100">Edit</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="bg-white border-b">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2</td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            Jacob
-                                        </td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            Thornton
-                                        </td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            @fat
-                                        </td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            <button class="py-2 rounded px-4 bg-gray-500 text-gray-100">Edit</button>
-                                        </td>
-                                    </tr>
+                                    <template v-if="bookings.length > 0">
+                                        <tr class="bg-white border-b" v-for="(booking, index) in bookings" :key="index">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{index}}</td>
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{booking.room.name}}</td>
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{booking.start}}</td>
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{booking.end}}</td>
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{booking.reason}}</td>
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                <button class="py-2 rounded px-4 bg-gray-500 text-gray-100">Edit</button>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                    <template v-else>
+
+                                    </template>
                                     </tbody>
                                 </table>
                             </div>
@@ -63,7 +49,24 @@
 import BaseLayout from "../layout/BaseLayout";
 export default {
     name: "MyBooking",
-    components: {BaseLayout}
+    components: {BaseLayout},
+    data() {
+        return {
+            bookings: null
+        }
+    },
+    mounted() {
+        this.fetchMyBookings();
+    },
+    methods: {
+        fetchMyBookings () {
+           axios.get('/api/my-bookings')
+            .then(response => {
+                this.bookings = response.data.data
+            })
+            .catch(e => e.response.data)
+        }
+    }
 }
 </script>
 
