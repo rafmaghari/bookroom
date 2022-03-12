@@ -30,11 +30,8 @@
                                     placeholder="Enter you email..."
                                 />
                             </div>
-                            <div class="mb-6">
-                                <label
-                                    class="block text-gray-700 text-sm font-normal mb-2"
-                                    for="password"
-                                >
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-normal mb-2" for="password">
                                     Password
                                 </label>
                                 <input
@@ -47,8 +44,25 @@
                                     autocomplete="current-password"
                                 />
                             </div>
+                            <div class="mb-6">
+                                <label class="block text-gray-700 text-sm font-normal mb-2" for="password">
+                                    Confirm Password
+                                </label>
+                                <input
+                                    class="text-sm shadow appearance-none border rounded w-full p-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                                    v-model="form.password_confirmation"
+                                    type="password"
+                                    placeholder="Confirm Password"
+                                    name="password_confirmation"
+                                    required
+                                    autocomplete="current-password"
+                                />
+                            </div>
                             <div class="flex items-center justify-between">
-                                <button class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700" type="submit">Sign In</button>
+                                <button class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700"
+                                        type="submit"
+                                        @click="register"
+                                >Register</button>
                                 <div class="flex space-x-2">
                                     <p class="text-sm">Already have an account?</p>
                                     <router-link
@@ -67,17 +81,30 @@
 
 <script>
 import BaseLayout from "../layout/BaseLayout";
+import axios from "axios"
 export default {
     name: "Register",
     components: {BaseLayout},
     data() {
-       return {
-           form: {
-               email: null,
-               password: null,
-               name: null
-           }
-       }
+        return {
+            form: {
+                email: null,
+                password: null,
+                password_confirmation: null,
+                name: null
+            }
+        }
+    },
+    methods: {
+        register () {
+            axios.post('/api/register',this.form).then(response=>{
+                console.log(response.data.data)
+            }).catch(({response:{data}})=>{
+                alert(data.message)
+            }).finally(()=>{
+                this.processing = false
+            })
+        }
     }
 
 }
