@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpdateRoomBookingRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'room_id' => ['nullable', 'exists:App\Models\Room,id'],
+            'start' => ['required', 'date'],
+            'end' => ['required', 'date'],
+            'reason' => ['required', 'max:255'],
+        ];
+    }
+}
