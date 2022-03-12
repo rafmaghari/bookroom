@@ -1,6 +1,5 @@
 import router from "./router";
 
-require('./bootstrap');
 
 window.Vue = require('vue').default;
 
@@ -9,6 +8,7 @@ window.Vue = require('vue').default;
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('app', require('./pages/App').default);
+Vue.component('Nav', require('./components/Nav').default);
 
 const app = new Vue({
     el: '#app',
