@@ -1,4 +1,5 @@
 import router from "./router";
+import store from "./store";
 
 
 window.Vue = require('vue').default;
@@ -12,5 +13,6 @@ Vue.component('Nav', require('./components/Nav').default);
 
 const app = new Vue({
     el: '#app',
-    router: router
+    router: router,
+    store: store
 });
