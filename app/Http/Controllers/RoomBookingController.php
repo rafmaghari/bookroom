@@ -11,7 +11,7 @@ class RoomBookingController extends BaseController
     public function store(RoomBookingRequest $request)
     {
         try {
-            $result = RoomBooking::create($request->validated());
+            $result = auth()->user()->roomBookings()->create($request->validated());
             return $this->sendResponse($result, 'Room booked successfully.');
         } catch (\Exception $e) {
             return $this->sendError(['message' => $e->getMessage()], 400);

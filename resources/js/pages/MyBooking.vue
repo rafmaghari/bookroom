@@ -32,7 +32,7 @@
                                         </tr>
                                     </template>
                                     <template v-else>
-
+                                        <p class="text-3xl text-center">NO BOOKING YET</p>
                                     </template>
                                     </tbody>
                                 </table>

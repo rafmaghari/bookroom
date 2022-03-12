@@ -8,23 +8,22 @@
                             <form @submit.prevent="handleSubmit">
                                 <div class="flex flex-col p-3">
                                     <label class="text-sm text-gray-400 my-2">Room</label>
-                                    <select name="room_id" id="room_id" class="border border-gray-200 w-full p-2 rounded" required>
-                                        <option value="1">ONE</option>
-                                        <option value="1">TWO</option>
-                                        <option value="1">THREE</option>
+                                    <select name="room_id" id="room_id" class="border border-gray-200 w-full p-2 rounded" v-model="form.room_id" required>
+                                        <option value="" disabled selected>Select a room...</option>
+                                        <option :value="room.id" v-for="(room, index) in rooms" key="index">{{room.name}}</option>
                                     </select>
                                 </div>
                                 <div class="flex flex-col p-3">
                                     <label class="text-sm text-gray-400 mb-2">Start</label>
-                                    <input type="datetime-local" class="w-full border-gray-200 border p-2 rounded" name="start" required>
+                                    <input v-model="form.start" type="datetime-local" class="w-full border-gray-200 border p-2 rounded" name="start" required>
                                 </div>
                                 <div class="flex flex-col p-3">
                                     <label class="text-sm text-gray-400 mb-2">End</label>
-                                    <input type="datetime-local" class="w-full border-gray-200 border p-2 rounded" name="end" required>
+                                    <input v-model="form.end" type="datetime-local" class="w-full border-gray-200 border p-2 rounded" name="end" required>
                                 </div>
                                 <div class="flex flex-col p-3">
                                     <label class="text-sm text-gray-400 mb-2">Reason</label>
-                                    <input type="text" class="w-full border-gray-200 border p-2 rounded" name="reason" required>
+                                    <input v-model="form.reason" type="text" class="w-full border-gray-200 border p-2 rounded" name="reason" required>
                                 </div>
                                 <div class="flex justify-end mx-3">
                                     <button type="submit" class="p-2 bg-blue-500 text-blue-100 rounded px-5">BOOK</button>
@@ -39,12 +38,42 @@
 
 <script>
 import BaseLayout from "../layout/BaseLayout";
+import router from "../router";
 export default {
 name: "BookRoom",
     components: {BaseLayout},
+    data() {
+        return {
+            rooms: null,
+            form: {
+                room_id: null,
+                start: null,
+                end: null,
+                reason: null
+            }
+        }
+    },
+    mounted() {
+        this.fetchRooms()
+    },
     methods: {
-        handleSubmit(e) {
-            console.log("here")
+        handleSubmit() {
+            this.book()
+        },
+        fetchRooms() {
+            axios.get('/api/rooms')
+                .then(response => {
+                    this.rooms = response.data.data
+                })
+                .catch(e => e.response.data)
+        },
+        book() {
+            axios.post('/api/room-bookings', this.form)
+                .then(response => {
+                    this.rooms = response.data.data
+                    router.push({name:'MyBookings'})
+                })
+                .catch(e => e.response.data)
         }
     }
 }

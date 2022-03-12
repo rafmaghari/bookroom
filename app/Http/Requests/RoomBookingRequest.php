@@ -14,7 +14,6 @@ class RoomBookingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'exists:App\Models\User,id'],
             'room_id' => ['required', 'exists:App\Models\Room,id'],
             'start' => ['required', 'date'],
             'end' => ['required', 'date'],
