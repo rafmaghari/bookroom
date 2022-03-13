@@ -99,6 +99,7 @@ export default {
     methods: {
         register () {
             axios.post('/register',this.form).then(response=>{
+                alert('Registered successfully. Login your new account')
                 router.push({name: 'login'})
             }).catch(({response:{data}})=>{
                 alert(data.message)
