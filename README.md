@@ -5,6 +5,7 @@
 ###---------------------------------
 ### composer install
 ### npm install
+### npm run dev
 ### cp .env.example .env
 ### --- DB settings
 ### php artisan migrate
