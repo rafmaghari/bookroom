@@ -16,6 +16,7 @@
 
 ##Testing
 ### ./vendor/bin/phpunit (unit testing)
+### php artisan dusk:install
 ### php artisan dusk (end to ent testing)
 
 
