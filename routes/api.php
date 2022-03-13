@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/rooms', RoomController::class);
     Route::get('/my-bookings', [RoomBookingController::class, 'myBookings']);
+    Route::get('/room-booking-by-date', [RoomBookingController::class, 'allBookingByDate']);
     Route::resource('/room-bookings', RoomBookingController::class);
 });
 

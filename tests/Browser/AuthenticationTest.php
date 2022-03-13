@@ -12,7 +12,7 @@ class AuthenticationTest extends DuskTestCase
 {
     use DatabaseMigrations, WithFaker;
 
-    public function testRegister()
+    public function test_register()
     {
         $this->browse(function ($browser) {
             $browser->visit('/register')
@@ -26,7 +26,7 @@ class AuthenticationTest extends DuskTestCase
         });
     }
 
-    public function testLogin()
+    public function test_login()
     {
         $user = User::factory()->create([
             'email' => 'raf@gmail.com',

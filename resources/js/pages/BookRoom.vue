@@ -15,11 +15,35 @@
                                 </div>
                                 <div class="flex flex-col p-3">
                                     <label class="text-sm text-gray-400 mb-2">Start</label>
-                                    <input step="1" v-model="form.start" type="datetime-local" class="w-full border-gray-200 border p-2 rounded" name="start" required>
+                                    <div class="flex space-x-2">
+                                        <div class="flex space-x-2 w-full">
+                                            <input type="date" class="w-1/2 border-gray-200 border p-2 rounded" name="start_start" required v-model="form.start_date"/>
+                                            <div class="py-1 px-3 flex space-x-2 w-1/2 border border-gray-200 rounded">
+                                                <select name="hours" id="start_hours" class="py-2 px-3 w-1/2" v-model="form.start_hour" required>
+                                                    <option :value="hour" v-for="(hour,index) in hoursInDay" :key="index">{{hour}}</option>
+                                                </select>
+                                                <select name="minute" id="start_minute" class="py-2 px-3 w-1/2" v-model="form.start_minute" required>
+                                                    <option :value="minute" v-for="(minute,index) in minuteByThirty" :key="index">{{minute}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="flex flex-col p-3">
                                     <label class="text-sm text-gray-400 mb-2">End</label>
-                                    <input v-model="form.end" type="datetime-local" class="w-full border-gray-200 border p-2 rounded" name="end" required>
+                                    <div class="flex space-x-2">
+                                        <div class="flex space-x-2 w-full">
+                                            <input type="date" class="w-1/2 border-gray-200 border p-2 rounded" name="start_start" required v-model="form.end_date"/>
+                                            <div class="py-1 px-3 flex space-x-2 w-1/2 border border-gray-200 rounded">
+                                                <select name="hours" id="hours" class="py-2 px-3 w-1/2" v-model="form.end_hour" required>
+                                                    <option :value="hour" v-for="(hour,index) in hoursInDay" :key="index">{{hour}}</option>
+                                                </select>
+                                                <select name="minute" id="minutes" class="py-2 px-3 w-1/2" v-model="form.end_minute" required>
+                                                    <option :value="minute" v-for="(minute,index) in minuteByThirty" :key="index">{{minute}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="flex flex-col p-3">
                                     <label class="text-sm text-gray-400 mb-2">Reason</label>
@@ -45,13 +69,22 @@ name: "BookRoom",
     data() {
         return {
             rooms: null,
+            roomBooking: [],
             form: {
                 room_id: null,
                 start: null,
+                start_date: null,
+                start_hour: null,
+                start_minute: null,
                 end: null,
+                end_date: null,
+                end_hour: null,
+                end_minute: null,
                 reason: null
             },
-            isEditing: false
+            isEditing: false,
+            hoursInDay: ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"],
+            minuteByThirty: ["00", "30"]
         }
     },
     mounted() {
@@ -78,19 +111,36 @@ name: "BookRoom",
                 .catch(e => e.response.data)
         },
         book() {
+            this.form.start = `${this.form.start_date} ${this.form.start_hour}:${this.form.start_minute}`
+            this.form.end =  `${this.form.end_date} ${this.form.end_hour}:${this.form.end_minute}`
             axios.post('/api/room-bookings', this.form)
                 .then(response => {
                     this.rooms = response.data.data
                     router.push({name:'MyBookings'})
                 })
-                .catch(e => e.response.data)
+                .catch(e => {
+                    alert(e.response.data.message.message)
+                })
         },
         updateBooking() {
+            this.form.start = `${this.form.start_date} ${this.form.start_hour}:${this.form.start_minute}`
+            this.form.end =  `${this.form.end_date} ${this.form.end_hour}:${this.form.end_minute}`
             axios.put(`/api/room-bookings/${this.$route.params.id}`, this.form)
                 .then(response => {
                     router.push({name:'MyBookings'})
                 })
-                .catch(e => e.response.data)
+                .catch(e => {
+                    alert(e.response.data.message.message)
+                })
+        },
+        checkRoomBooking() {
+            axios.post(`/api/room-booking-by-date/`, this.form)
+                .then(response => {
+                    this.roomBooking = response.data.data
+                })
+                .catch(e => {
+                    alert(e.response.data.message.message)
+                })
         },
         getBooking() {
             axios.get( `/api/room-bookings/${this.$route.params.id}`, this.form)
@@ -100,8 +150,27 @@ name: "BookRoom",
                     this.form.start = data.start
                     this.form.end = data.end
                     this.form.reason = data.reason
+                    const start = this.splitDateTime(data.start)
+                    this.form.start_date = start['date']
+                    this.form.start_hour = start['hour']
+                    this.form.start_minute = start['minute']
+
+                    const end = this.splitDateTime(data.end)
+                    this.form.end_date = end['date']
+                    this.form.end_hour = end['hour']
+                    this.form.end_minute = end['minute']
                 })
                 .catch(e => e.response.data)
+        },
+        splitDateTime(dateTime) {
+            const splitDateTime = dateTime.split(" ");
+            const time = splitDateTime[1].split(":");
+            return  {
+                'date': splitDateTime[0],
+                'hour': time[0],
+                'minute': time[1]
+            }
+
         }
     }
 }
