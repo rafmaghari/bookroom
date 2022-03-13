@@ -7,8 +7,8 @@
             </div>
         </div>
 
-        <div class="sm:mb-0 self-center text-sm flex">
-            <template v-if="authenticated && !isAdmin">
+        <div class="sm:mb-0 self-center text-sm flex" v-if="authenticated">
+            <template v-if="!isAdmin">
                 <router-link :to="'/my-bookings'" class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">My Bookings</router-link>
                 <router-link :to="'/book-room'" class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">Book A Room</router-link>
             </template>
@@ -16,7 +16,7 @@
                 <p class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">Admin Page</p>
                 <router-link :to="'/rooms'" class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">Rooms</router-link>
             </template>
-            <button @click="logout" v-if="authenticated" class="text-md underline text-gray-100 hover:text-gray-300 ml-2 px-1">Logout</button>
+            <button @click="logout" class="text-md underline text-gray-100 hover:text-gray-300 ml-2 px-1">Logout</button>
         </div>
 
 
