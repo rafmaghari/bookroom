@@ -25,7 +25,7 @@ class RoomAvailability
             ->where('room_id', $this->roomId)
             ->where('start', '>=', $this->start)
             ->where('end', '<=', $this->end)
-            ->get();
+            ->first();
     }
 
     public function check()
