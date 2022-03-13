@@ -11,6 +11,7 @@ const Dashboard = () => import('../pages/Dashboard.vue' /* webpackChunkName: "re
 const MyBookings = () => import('../pages/MyBooking.vue' /* webpackChunkName: "resource/js/pages/myBooking" */)
 const BookRoom = () => import('../pages/BookRoom.vue' /* webpackChunkName: "resource/js/pages/bookRoom" */)
 const NotFound = () => import('../pages/NotFound.vue' /* webpackChunkName: "resource/js/pages/notFound" */)
+const Unauthorized = () => import('../pages/Unauthorized' /* webpackChunkName: "resource/js/pages/unauthorized" */)
 const Rooms = () => import('../pages/Rooms.vue' /* webpackChunkName: "resource/js/pages/rooms" */)
 const RoomForm = () => import('../pages/RoomForm.vue' /* webpackChunkName: "resource/js/pages/roomForm" */)
 
@@ -65,7 +66,7 @@ const Routes = [
         path: "/rooms/",
         component: Rooms,
         meta:{
-            middleware:"auth",
+            middleware:"admin",
             title: "Rooms"
         },
     },
@@ -74,7 +75,7 @@ const Routes = [
         path: "/room-form/",
         component: RoomForm,
         meta:{
-            middleware:"auth",
+            middleware:"admin",
             title: "Room Form"
         },
     },
@@ -83,9 +84,17 @@ const Routes = [
         path: "/room-form/:id",
         component: RoomForm,
         meta:{
-            middleware:"auth",
+            middleware:"admin",
             title: "Room Form"
         },
+    },
+    {
+        name: 'Unauthorized',
+        path: "/unauthorized",
+        component: Unauthorized,
+        meta: {
+            title: "Unauathorized"
+        }
     },
     {
         path: '*',
@@ -104,15 +113,20 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     document.title = `${to.meta.title} - ${process.env.MIX_APP_NAME}`
-    if(to.meta.middleware==="guest"){
-        if(store.state.auth.authenticated){
-            next({name:"MyBookings"})
+    if (to.meta.middleware==="guest") {
+        if (store.state.auth.authenticated) {
+            next({name: "MyBookings"})
         }
         next()
-    }else{
-        if(store.state.auth.authenticated){
+    } else if (to.meta.middleware === "admin") {
+        if (store.state.auth.authenticated && !store.state.auth.is_admin) {
+            next({name: "Unauthorized"})
+        }
+        next()
+    } else {
+        if (store.state.auth.authenticated) {
             next()
-        }else{
+        } else {
             next({name:"login"})
         }
     }
