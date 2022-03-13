@@ -79,6 +79,15 @@ const Routes = [
         },
     },
     {
+        name: "EditRoomForm",
+        path: "/room-form/:id",
+        component: RoomForm,
+        meta:{
+            middleware:"auth",
+            title: "Room Form"
+        },
+    },
+    {
         path: '*',
         name: 'Not Found',
         component: NotFound,

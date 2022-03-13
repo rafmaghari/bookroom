@@ -29,6 +29,16 @@ class RoomBookingController extends BaseController
 
     }
 
+    public function destroy(RoomBooking $roomBooking)
+    {
+        try {
+            $result = $roomBooking->delete();
+            return $this->sendResponse($result, 'Room deleted successfully.');
+        } catch (\Exception $e) {
+            return $this->sendError(['message' => $e->getMessage()], 400);
+        }
+    }
+
     public function show($id)
     {
         try {

@@ -24,7 +24,10 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{index + 1}}</td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{room.name}}</td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                <router-link :to="`/rooms/${room.id}`" class="py-2 rounded px-4 bg-gray-500 text-gray-100">Edit</router-link>
+                                                <div>
+                                                    <router-link :to="`/room-form/${room.id}`" class="py-2 rounded px-4 bg-gray-500 text-gray-100">Edit</router-link>
+                                                    <button @click="deleteRoom(room.id)" class="py-2 rounded px-4 bg-red-500 text-red-100">Delete</button>
+                                                </div>
                                             </td>
                                         </tr>
                                     </template>
@@ -64,6 +67,13 @@ name: "Rooms",
                     this.rooms = response.data.data
                 })
                 .catch(e => e.response.data)
+        },
+        deleteRoom(id) {
+           if(window.confirm("Are you sure, you want to delete this record?")) {
+               axios.delete(`/api/rooms/${id}`)
+               .then(response => this.fetchRooms())
+               .catch(error => console.log(error))
+           }
         }
     }
 }

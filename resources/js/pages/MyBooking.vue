@@ -28,6 +28,7 @@
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{booking.reason}}</td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 <router-link :to="`/book-room/${booking.id}`" class="py-2 rounded px-4 bg-gray-500 text-gray-100">Edit</router-link>
+                                                <button @click="deleteBooking(booking.id)" class="py-2 rounded px-4 bg-red-500 text-red-100">Delete</button>
                                             </td>
                                         </tr>
                                     </template>
@@ -67,6 +68,13 @@ export default {
                 this.bookings = response.data.data
             })
             .catch(e => e.response.data)
+        },
+        deleteBooking(id) {
+            if (window.confirm("Are you sure, you want to delete to record?")) {
+                axios.delete(`/api/room-bookings/${id}`)
+                .then(_ => this.fetchMyBookings())
+                .catch(error => console.log(error))
+            }
         }
     }
 }

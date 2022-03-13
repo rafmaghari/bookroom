@@ -14,6 +14,7 @@
             </template>
             <template v-else>
                 <p class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">Admin Page</p>
+                <router-link :to="'/rooms'" class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">Rooms</router-link>
             </template>
             <button @click="logout" v-if="authenticated" class="text-md underline text-gray-100 hover:text-gray-300 ml-2 px-1">Logout</button>
         </div>
