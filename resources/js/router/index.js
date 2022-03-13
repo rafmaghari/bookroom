@@ -10,6 +10,7 @@ const Register = () => import('../pages/Register.vue' /* webpackChunkName: "reso
 const Dashboard = () => import('../pages/Dashboard.vue' /* webpackChunkName: "resource/js/pages/dashboard" */)
 const MyBookings = () => import('../pages/MyBooking.vue' /* webpackChunkName: "resource/js/pages/myBooking" */)
 const BookRoom = () => import('../pages/BookRoom.vue' /* webpackChunkName: "resource/js/pages/bookRoom" */)
+const NotFound = () => import('../pages/NotFound.vue' /* webpackChunkName: "resource/js/pages/notFound" */)
 
 const Routes = [
     {
@@ -28,15 +29,6 @@ const Routes = [
         meta:{
             middleware:"guest",
             title: "Register"
-        },
-    },
-    {
-        name: "dashboard",
-        path: "/dashboard",
-        component: Dashboard,
-        meta:{
-            middleware:"auth",
-            title: "Dashboard"
         },
     },
     {
@@ -65,6 +57,14 @@ const Routes = [
             middleware:"auth",
             title: "Edit Booking"
         },
+    },
+    {
+        path: '*',
+        name: 'Not Found',
+        component: NotFound,
+        meta: {
+            title: "NOT FOUND"
+        }
     }
 ]
 
