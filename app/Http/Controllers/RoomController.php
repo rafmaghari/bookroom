@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class RoomController extends BaseController
 {
+    public function __construct()
+    {
+        $this->middleware('admin')->except(['index']);
+    }
+
     public function index()
     {
         try {
