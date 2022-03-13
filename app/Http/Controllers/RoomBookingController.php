@@ -29,6 +29,16 @@ class RoomBookingController extends BaseController
 
     }
 
+    public function show($id)
+    {
+        try {
+            $result = RoomBooking::where('id',$id)->with('user', 'room')->first();
+            return $this->sendResponse($result, 'Room updated successfully.');
+        } catch (\Exception $e) {
+            return $this->sendError(['message' => $e->getMessage()], 400);
+        }
+    }
+
     public function myBookings()
     {
         try {

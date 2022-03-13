@@ -27,7 +27,7 @@
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{booking.end}}</td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{booking.reason}}</td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                <button class="py-2 rounded px-4 bg-gray-500 text-gray-100">Edit</button>
+                                                <router-link :to="`/book-room/${booking.id}`" class="py-2 rounded px-4 bg-gray-500 text-gray-100">Edit</router-link>
                                             </td>
                                         </tr>
                                     </template>
@@ -52,7 +52,7 @@ export default {
     components: {BaseLayout},
     data() {
         return {
-            bookings: null
+            bookings: []
         }
     },
     mounted() {

@@ -17,7 +17,8 @@ const Routes = [
         path: "/login",
         component: Login,
         meta:{
-            middleware:"guest"
+            middleware:"guest",
+            title: "Login"
         },
     },
     {
@@ -25,7 +26,8 @@ const Routes = [
         path: "/register",
         component: Register,
         meta:{
-            middleware:"guest"
+            middleware:"guest",
+            title: "Register"
         },
     },
     {
@@ -33,7 +35,8 @@ const Routes = [
         path: "/dashboard",
         component: Dashboard,
         meta:{
-            middleware:"auth"
+            middleware:"auth",
+            title: "Dashboard"
         },
     },
     {
@@ -41,7 +44,8 @@ const Routes = [
         path: "/my-bookings",
         component: MyBookings,
         meta:{
-            middleware:"auth"
+            middleware:"auth",
+            title: "My Bookings"
         },
     },
     {
@@ -49,7 +53,17 @@ const Routes = [
         path: "/book-room",
         component: BookRoom,
         meta:{
-            middleware:"auth"
+            middleware:"auth",
+            title: "Book a Room"
+        },
+    },
+    {
+        name: "EditBooking",
+        path: "/book-room/:id",
+        component: BookRoom,
+        meta:{
+            middleware:"auth",
+            title: "Edit Booking"
         },
     }
 ]
