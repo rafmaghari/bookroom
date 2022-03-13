@@ -10,7 +10,7 @@
         <div class="sm:mb-0 self-center text-sm flex" v-if="authenticated">
             <template v-if="!isAdmin">
                 <router-link :to="'/my-bookings'" class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">My Bookings</router-link>
-                <router-link :to="'/book-room'" class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">Book A Room</router-link>
+                <router-link :to="'/book-room'" dusk="book-a-room" class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">Book A Room</router-link>
             </template>
             <template v-else>
                 <p class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">Admin Page</p>

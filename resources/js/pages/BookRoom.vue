@@ -8,7 +8,7 @@
                             <form @submit.prevent="handleSubmit">
                                 <div class="flex flex-col p-3">
                                     <label class="text-sm text-gray-400 my-2">Room</label>
-                                    <select name="room_id" id="room_id" class="border border-gray-200 w-full p-2 rounded" v-model="form.room_id" required>
+                                    <select name="room_id" dusk="room_id" id="room_id" class="border border-gray-200 w-full p-2 rounded" v-model="form.room_id" required>
                                         <option value="" disabled selected>Select a room...</option>
                                         <option :value="room.id" v-for="(room, index) in rooms" :key="index">{{room.name}}</option>
                                     </select>
@@ -17,9 +17,9 @@
                                     <label class="text-sm text-gray-400 mb-2">Start</label>
                                     <div class="flex space-x-2">
                                         <div class="flex space-x-2 w-full">
-                                            <input type="date" class="w-1/2 border-gray-200 border p-2 rounded" name="start_start" required v-model="form.start_date"/>
+                                            <input type="date" class="w-1/2 border-gray-200 border p-2 rounded" name="start_date" id="start_date" required v-model="form.start_date"/>
                                             <div class="py-1 px-3 flex space-x-2 w-1/2 border border-gray-200 rounded">
-                                                <select name="hours" id="start_hours" class="py-2 px-3 w-1/2" v-model="form.start_hour" required>
+                                                <select name="hours" id="start_hour" class="py-2 px-3 w-1/2" v-model="form.start_hour" required>
                                                     <option :value="hour" v-for="(hour,index) in hoursInDay" :key="index">{{hour}}</option>
                                                 </select>
                                                 <select name="minute" id="start_minute" class="py-2 px-3 w-1/2" v-model="form.start_minute" required>
@@ -33,12 +33,12 @@
                                     <label class="text-sm text-gray-400 mb-2">End</label>
                                     <div class="flex space-x-2">
                                         <div class="flex space-x-2 w-full">
-                                            <input type="date" class="w-1/2 border-gray-200 border p-2 rounded" name="start_start" required v-model="form.end_date"/>
+                                            <input type="date" class="w-1/2 border-gray-200 border p-2 rounded" name="end_date" id="end_date" required v-model="form.end_date"/>
                                             <div class="py-1 px-3 flex space-x-2 w-1/2 border border-gray-200 rounded">
-                                                <select name="hours" id="hours" class="py-2 px-3 w-1/2" v-model="form.end_hour" required>
+                                                <select name="end_hour" id="end_hour" class="py-2 px-3 w-1/2" v-model="form.end_hour" required>
                                                     <option :value="hour" v-for="(hour,index) in hoursInDay" :key="index">{{hour}}</option>
                                                 </select>
-                                                <select name="minute" id="minutes" class="py-2 px-3 w-1/2" v-model="form.end_minute" required>
+                                                <select name="end_minute" id="end_minute" class="py-2 px-3 w-1/2" v-model="form.end_minute" required>
                                                     <option :value="minute" v-for="(minute,index) in minuteByThirty" :key="index">{{minute}}</option>
                                                 </select>
                                             </div>
@@ -47,10 +47,10 @@
                                 </div>
                                 <div class="flex flex-col p-3">
                                     <label class="text-sm text-gray-400 mb-2">Reason</label>
-                                    <input v-model="form.reason" type="text" class="w-full border-gray-200 border p-2 rounded" name="reason" required>
+                                    <input v-model="form.reason" type="text" class="w-full border-gray-200 border p-2 rounded" name="reason" id="reason" required>
                                 </div>
                                 <div class="flex justify-end mx-3">
-                                    <button type="submit" class="p-2 bg-blue-500 text-blue-100 rounded px-5">{{isEditing ? "UPDATE" : "ADD"}}</button>
+                                    <button type="submit" class="p-2 bg-blue-500 text-blue-100 rounded px-5" dusk="btn-submit">{{isEditing ? "UPDATE" : "ADD"}}</button>
                                 </div>
                             </form>
                         </div>
