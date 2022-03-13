@@ -19,6 +19,7 @@
                                    name="email"
                                    v-model="form.email"
                                    type="email"
+                                   dusk="email-input"
                                    required
                                    autofocus
                                    placeholder="Enter you email..."
@@ -36,6 +37,7 @@
                                    v-model="form.password"
                                    type="password"
                                    placeholder="Password"
+                                   dusk="password-input"
                                    name="password"
                                    required
                                    autocomplete="current-password"
@@ -44,6 +46,7 @@
                            <div class="flex items-center justify-between">
                                <button
                                    @click="login"
+                                   dusk="btn-login"
                                    class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700"
                                    type="button"
                                >Sign In</button>
@@ -73,8 +76,8 @@ export default {
     data() {
         return {
             form: {
-                email: "raf@gmail.com",
-                password: "Pa$$w0rd!"
+                email: null,
+                password: null
             },
             errors: null
         }

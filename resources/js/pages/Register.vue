@@ -10,7 +10,7 @@
                                 <label class="block text-gray-700 text-sm font-normal mb-2" for="username">Name</label>
                                 <input
                                     class="text-sm shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    name="email"
+                                    name="name"
                                     v-model="form.name"
                                     type="text"
                                     required
