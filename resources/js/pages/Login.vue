@@ -6,6 +6,9 @@
                    <div class="w-full max-w-md">
                        <form class="bg-white shadow-lg rounded px-12 pt-6 pb-8 mb-4">
                            <div class="text-gray-800 text-2xl flex justify-center py-2 mb-4">Login</div>
+                           <div class="bg-red-200 text-gray-500 text-sm p-2 mb-3 rounded" v-if="errors != null">
+                               <p v-for="(error, index) in errors" :key="index">- {{error}}</p>
+                           </div>
                            <div class="mb-4">
                                <label class="block text-gray-700 text-sm font-normal mb-2"
                                       for="username">
@@ -72,7 +75,8 @@ export default {
             form: {
                 email: "raf@gmail.com",
                 password: "Pa$$w0rd!"
-            }
+            },
+            errors: null
         }
     },
     methods: {
@@ -84,10 +88,19 @@ export default {
             .then(response => {
                axios.post('/login', this.form)
                .then(response => {
-                   console.log(response.data)
                    this.signIn()
                })
-                .catch(err => console.log(err))
+                .catch(error =>{
+                    if (error.response.status === 422) {
+                        let msg = [];
+                        _.map(error.response.data.errors, function (n) {
+                            msg.push(n[0])
+                        })
+                        this.errors = msg
+                    } else {
+                        this.errors = [error.response.data.message];
+                    }
+                })
             })
 
 

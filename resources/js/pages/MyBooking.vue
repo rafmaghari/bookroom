@@ -21,7 +21,7 @@
                                     <tbody>
                                     <template v-if="bookings.length > 0">
                                         <tr class="bg-white border-b" v-for="(booking, index) in bookings" :key="index">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{index}}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{index + 1}}</td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{booking.room.name}}</td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{booking.start}}</td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{booking.end}}</td>
@@ -32,7 +32,9 @@
                                         </tr>
                                     </template>
                                     <template v-else>
-                                        <p class="text-3xl text-center">NO BOOKING YET</p>
+                                        <tr>
+                                            <td colspan="6" class="text-3xl text-center p-3">NO BOOKING YET</td>
+                                        </tr>
                                     </template>
                                     </tbody>
                                 </table>

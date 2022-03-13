@@ -82,6 +82,7 @@
 <script>
 import BaseLayout from "../layout/BaseLayout";
 import axios from "axios"
+import router from "../router";
 export default {
     name: "Register",
     components: {BaseLayout},
@@ -98,7 +99,7 @@ export default {
     methods: {
         register () {
             axios.post('/register',this.form).then(response=>{
-                console.log(response.data.data)
+                router.push({name: 'login'})
             }).catch(({response:{data}})=>{
                 alert(data.message)
             }).finally(()=>{
