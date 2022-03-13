@@ -11,6 +11,8 @@ const Dashboard = () => import('../pages/Dashboard.vue' /* webpackChunkName: "re
 const MyBookings = () => import('../pages/MyBooking.vue' /* webpackChunkName: "resource/js/pages/myBooking" */)
 const BookRoom = () => import('../pages/BookRoom.vue' /* webpackChunkName: "resource/js/pages/bookRoom" */)
 const NotFound = () => import('../pages/NotFound.vue' /* webpackChunkName: "resource/js/pages/notFound" */)
+const Rooms = () => import('../pages/Rooms.vue' /* webpackChunkName: "resource/js/pages/rooms" */)
+const RoomForm = () => import('../pages/RoomForm.vue' /* webpackChunkName: "resource/js/pages/roomForm" */)
 
 const Routes = [
     {
@@ -59,6 +61,24 @@ const Routes = [
         },
     },
     {
+        name: "Rooms",
+        path: "/rooms/",
+        component: Rooms,
+        meta:{
+            middleware:"auth",
+            title: "Rooms"
+        },
+    },
+    {
+        name: "RoomForm",
+        path: "/room-form/",
+        component: RoomForm,
+        meta:{
+            middleware:"auth",
+            title: "Room Form"
+        },
+    },
+    {
         path: '*',
         name: 'Not Found',
         component: NotFound,
@@ -77,7 +97,7 @@ router.beforeEach((to, from, next) => {
     document.title = `${to.meta.title} - ${process.env.MIX_APP_NAME}`
     if(to.meta.middleware==="guest"){
         if(store.state.auth.authenticated){
-            next({name:"dashboard"})
+            next({name:"MyBookings"})
         }
         next()
     }else{

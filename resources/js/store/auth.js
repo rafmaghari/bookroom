@@ -5,7 +5,8 @@ export default {
     namespaced: true,
     state:{
         authenticated:false,
-        user:{}
+        user:{},
+        is_admin: false
     },
     getters:{
         authenticated(state){
@@ -13,6 +14,9 @@ export default {
         },
         user(state){
             return state.user
+        },
+        is_admin(state){
+            return state.is_admin
         }
     },
     mutations:{
@@ -21,15 +25,21 @@ export default {
         },
         SET_USER (state, value) {
             state.user = value
+        },
+        SET_IS_ADMIN (state, value) {
+            state.is_admin = value
         }
     },
     actions:{
         login({commit}){
             axios.defaults.withCredentials =true
             return axios.get('/api/user').then(({data})=>{
+                const isAdmin = data.is_admin === 1;
+                const routeToPush = isAdmin ? 'Rooms' : 'MyBookings';
                 commit('SET_USER',data)
+                commit('SET_IS_ADMIN',isAdmin)
                 commit('SET_AUTHENTICATED',true)
-                router.push({name:'MyBookings'})
+                router.push({name: routeToPush})
             }).catch(({response:{data}})=>{
                 commit('SET_USER',{})
                 commit('SET_AUTHENTICATED',false)

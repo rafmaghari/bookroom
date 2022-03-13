@@ -7,11 +7,18 @@
             </div>
         </div>
 
-        <div class="sm:mb-0 self-center text-sm" v-if="authenticated">
-            <router-link :to="'/my-bookings'" class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">My Bookings</router-link>
-            <router-link :to="'/book-room'" class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">Book A Room</router-link>
-            <button @click="logout" class="text-md underline text-gray-100 hover:text-gray-300 ml-2 px-1">Logout</button>
+        <div class="sm:mb-0 self-center text-sm flex">
+            <template v-if="authenticated && !isAdmin">
+                <router-link :to="'/my-bookings'" class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">My Bookings</router-link>
+                <router-link :to="'/book-room'" class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">Book A Room</router-link>
+            </template>
+            <template v-else>
+                <p class="text-md no-underline text-gray-100 hover:text-gray-300 ml-2 px-1">Admin Page</p>
+            </template>
+            <button @click="logout" v-if="authenticated" class="text-md underline text-gray-100 hover:text-gray-300 ml-2 px-1">Logout</button>
         </div>
+
+
     </nav>
 </template>
 
@@ -22,7 +29,8 @@ export default {
     data() {
        return {
            user: this.$store.getters["auth/user"],
-           authenticated: this.$store.getters["auth/authenticated"]
+           authenticated: this.$store.getters["auth/authenticated"],
+           isAdmin: this.$store.getters["auth/is_admin"]
        }
     },
     methods: {
